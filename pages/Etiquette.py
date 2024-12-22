@@ -1,12 +1,11 @@
-def get_template(title, search_query):
-    page_template = f'''import streamlit as st
+import streamlit as st
 import re
 from app import create_new_page
 from utils.page_generator import *
 
-SEARCH_QUERY = """{search_query}"""
-TITLE = """{title}"""
-''' + r'''
+SEARCH_QUERY = """etiquette"""
+TITLE = """Etiquette"""
+
 st.set_page_config(initial_sidebar_state="collapsed")
 st.markdown(
     """
@@ -79,6 +78,3 @@ for chunk in generate_content(TITLE, SEARCH_QUERY):
     else:
         content += chunk
         content_placeholder.markdown(content, unsafe_allow_html=True)
-'''
-
-    return page_template
