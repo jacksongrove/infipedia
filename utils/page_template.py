@@ -57,7 +57,7 @@ for chunk in generate_content(TITLE, SEARCH_QUERY):
         pattern = r"\[\[(.*?)\]\]"
         processed_chunk = re.sub(
             pattern, 
-            lambda m: f"[{m.group(1)}](?action={m.group(1).replace(' ', '_')})",
+            lambda m: f'<a href="?action={m.group(1).replace(" ", "_")}" target="_self">{m.group(1)}</a>',
             linked_content
         )
 
