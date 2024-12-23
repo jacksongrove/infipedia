@@ -3,10 +3,10 @@ import time
 from pathlib import Path
 from utils.page_generator import *
 from utils.page_template import *
-  
+
 def style_page():
     '''
-    Initalizes the content and style for the page text.
+    Initializes the content and style for the page text.
     '''
     st.set_page_config(initial_sidebar_state="collapsed")
     st.markdown(
@@ -26,6 +26,19 @@ def style_page():
             color: #666;
             margin-top: -15px;
         }
+        /* Remove border, padding, and shadow from the form */
+        div[data-testid="stForm"] {
+            border: none !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+        }
+
+        /* Remove padding from the form submit button */
+        button[kind="primaryFormSubmit"] {
+            margin-top: 10px !important;
+            padding: 8px 16px !important;
+            border-radius: 5px !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -34,24 +47,21 @@ def style_page():
     st.markdown('<div class="centered">', unsafe_allow_html=True)
     # Title
     st.markdown('<h1 class="centered">Infipedia</h1>', unsafe_allow_html=True)
-    st.markdown('<p class=centered>The Free (infinite) Encyclopedia', unsafe_allow_html=True)
+    st.markdown('<p class=centered>The Free (Infinite) Encyclopedia</p>', unsafe_allow_html=True)
 
-    # Set style for search bar label
-    label = "Search and learn something new"
-    change_label_style(label, '18px')
-    query = st.text_input(label, key="search_query")
+    # Search form
+    with st.form(key="search_form"):
+        query = st.text_input("Search and learn something new", key="search_query")
+        # Submit button inside the form
+        submit = st.form_submit_button(label="Search")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    return query
+    return query, submit
 
-# Search bar
+
 def change_label_style(label, font_size='12px', font_color='white'):
     '''
-    A helper function to initalize the style for the search bar label.
-
-    Args:
-        :label (str): Value for label css attribute
-        :font_size (str): Value for font_size css attribute
-        :font_color (str): Value for font_color css attribute
+    A helper function to initialize the style for the search bar label.
     '''
     html = f"""
     <script>
@@ -85,8 +95,7 @@ def create_new_page(search_query):
         page_content = get_template(title=page_title, search_query=search_query)
         file.write(page_content)
     
-
-    # Redirect to the new page upon creation
+    # Wait until the file is populated
     start_time = time.time()
     last_size = -1
 
@@ -108,21 +117,18 @@ def create_new_page(search_query):
 
         # Timeout handling
         if time.time() - start_time > 30:
-            print("Request Timeout: File {file_path} did not stabilize within 30 seconds. Try again.")
+            raise TimeoutError(f"Request Timeout: File {file_path} did not stabilize within 30 seconds. Try again.")
 
         time.sleep(0.1)
 
 
 def main():
-    # Initalizing page content and style
-    query = style_page()
+    # Initialize page style
+    query, submit = style_page()
 
     # Redirect on submit button click
-    if st.button("Search"):
-        if query:
-            create_new_page(query)
-
-    st.markdown('</div>', unsafe_allow_html=True)
+    if submit and query:
+        create_new_page(query)
 
 if __name__ == "__main__":
     main()
