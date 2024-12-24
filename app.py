@@ -8,7 +8,6 @@ def style_page():
     '''
     Initializes the content and style for the page text.
     '''
-    st.set_page_config(initial_sidebar_state="collapsed")
     st.markdown(
         """
         <style>
@@ -107,7 +106,6 @@ def create_new_page(search_query):
 
             # If size hasn't changed for two consecutive checks, assume it's ready
             if current_size == last_size:
-                print(current_size, last_size)
                 time.sleep(3)
                 st.switch_page(file_path)
             last_size = current_size
@@ -124,6 +122,7 @@ def create_new_page(search_query):
 
 def main():
     # Initialize page style
+    st.set_page_config(initial_sidebar_state="collapsed")
     query, submit = style_page()
 
     # Redirect on submit button click
