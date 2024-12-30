@@ -19,4 +19,11 @@ RUN echo "\
 headless = true\n\
 enableCORS=false\n\
 enableXsrfProtection=false\n\
-po
+port = 8501\n\
+" > ~/.streamlit/config.toml
+
+# Expose the Streamlit port
+EXPOSE 8501
+
+# Command to run the app
+CMD ["streamlit", "run", "app.py", "--client.showSidebarNavigation", "False", "--server.address", "0.0.0.0"]
