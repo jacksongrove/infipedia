@@ -2,7 +2,6 @@ import streamlit as st
 from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.file_util import get_main_script_directory, normalize_path_join
 import time
-from pathlib import Path
 from utils.page_generator import *
 from utils.page_template import *
 
@@ -103,7 +102,6 @@ def create_new_page(search_query):
     file_path = page_path(fname)
     
     # Create new file & write the page content to the file
-    Path(file_path).touch()
     with open(file_path, "w") as file:
         page_content = get_template(title=page_title, search_query=search_query)
         file.write(page_content)
