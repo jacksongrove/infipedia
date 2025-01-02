@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit.runtime.scriptrunner import get_script_run_ctx
+from streamlit.file_util import get_main_script_directory, normalize_path_join
 import time
 from pathlib import Path
 from utils.page_generator import *
@@ -73,6 +75,18 @@ def change_label_style(label, font_size='12px', font_color='white'):
     st.components.v1.html(html)
 
 
+def page_list():
+    ctx = get_script_run_ctx()
+    all_app_pages = ctx.pages_manager.get_pages().values()
+    return [p["script_path"] for p in all_app_pages]
+
+def page_path(page):
+    ctx = get_script_run_ctx()
+    main_script_directory = get_main_script_directory(ctx.main_script_path)
+    return os.path.realpath(
+        normalize_path_join(main_script_directory, f"pages/{page}.py")
+    )
+
 # Dynamic page creation
 def create_new_page(search_query):
     '''
@@ -86,7 +100,7 @@ def create_new_page(search_query):
 
     # Define the file path
     fname = page_title.replace(" ", "")
-    file_path = f"pages/{fname}.py"
+    file_path = page_path(fname)
     
     # Create new file & write the page content to the file
     Path(file_path).touch()
@@ -94,30 +108,18 @@ def create_new_page(search_query):
         page_content = get_template(title=page_title, search_query=search_query)
         file.write(page_content)
     
-    # Wait until the file is populated
+    # Wait until the file is populated and recognized by streamlit
     start_time = time.time()
-    last_size = -1
 
     while True:
-        # Check if the file exists
-        if os.path.exists(file_path):
-            # Get the current file size
-            current_size = os.path.getsize(file_path)
-
-            # If size hasn't changed for two consecutive checks, assume it's ready
-            if current_size == last_size:
-                time.sleep(3)
-                st.switch_page(file_path)
-            last_size = current_size
-        else:
-            # File doesn't exist yet, continue waiting
-            pass
+        # Check if the file is in the streamlit-recognized pages
+        all_pages = page_list()
+        if file_path in all_pages:
+            st.switch_page(file_path)
 
         # Timeout handling
         if time.time() - start_time > 30:
             raise TimeoutError(f"Request Timeout: File {file_path} did not stabilize within 30 seconds. Try again.")
-
-        time.sleep(0.1)
 
 
 def main():
