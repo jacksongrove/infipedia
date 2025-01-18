@@ -122,4 +122,12 @@ def create_new_page(search_query):
 
 def main():
     # Initialize page style
-    st.set_page_config(initial_sidebar_state="c
+    st.set_page_config(initial_sidebar_state="collapsed")
+    query, submit = style_page()
+
+    # Redirect on submit button click
+    if submit and query:
+        create_new_page(query)
+
+if __name__ == "__main__":
+    main()
