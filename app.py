@@ -49,7 +49,7 @@ def style_page():
     st.markdown('<h1 class="centered">Infipedia</h1>', unsafe_allow_html=True)
     st.markdown('<p class=centered>The Free (Infinite) Encyclopedia</p>', unsafe_allow_html=True)
 
-    # Search form
+    # Search bar
     with st.form(key="search_form"):
         query = st.text_input("Search and learn something new", key="search_query")
         # Submit button inside the form
@@ -86,39 +86,37 @@ def page_path(page):
         normalize_path_join(main_script_directory, f"pages/{page}.py")
     )
 
-# Dynamic page creation
 def create_new_page(search_query):
     '''
     Creates a new page based on a search query and redirects the user to that page.
-
-    Args:
-        :search_query (str): A search query to be parsed as input for content generation
     '''
     # Get title for page
     page_title = generate_title(search_query)
 
-    # Define the file path
+    # Define the absolute file path
     fname = page_title.replace(" ", "")
-    file_path = page_path(fname)
+    file_path = os.path.abspath(os.path.join("pages", f"{fname}.py"))
     
+    # Ensure the 'pages' directory exists
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
     # Create new file & write the page content to the file
     with open(file_path, "w") as file:
         page_content = get_template(title=page_title, search_query=search_query)
         file.write(page_content)
     
-    # Wait until the file is populated and recognized by streamlit
+    # Wait until the file is populated and recognized by Streamlit
     start_time = time.time()
 
     while True:
-        # Check if the file is in the streamlit-recognized pages
+        # Check if the file is in the Streamlit-recognized pages
         all_pages = page_list()
-        if file_path in all_pages:
-            st.switch_page(file_path)
+        if os.path.abspath(file_path) in all_pages:  # Compare absolute paths
+            st.switch_page(os.path.abspath(file_path))
 
         # Timeout handling
         if time.time() - start_time > 30:
             raise TimeoutError(f"Request Timeout: File {file_path} did not stabilize within 30 seconds. Try again.")
-
 
 def main():
     # Initialize page style
