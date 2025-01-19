@@ -30,7 +30,8 @@ EXPOSE 8501
 RUN mkdir -p /var/log && touch /var/log/cron.log
 
 # Add the cron job to delete pages after 10 minutes
-RUN echo "*/10 * * * * python3 /delete_old_pages.py > /var/log/cron.log 2>&1" > /etc/cron.d/delete_old_files
+RUN echo "PATH=/usr/local/bin:/usr/bin:/bin" > /etc/environment && \
+    echo "*/10 * * * * /usr/local/bin/python3 /app/delete_old_pages.py >> /var/log/cron.log 2>&1" > /etc/cron.d/delete_old_files
 
 # Set permissions for the cron job file and install it
 RUN chmod 0644 /etc/cron.d/delete_old_files && crontab /etc/cron.d/delete_old_files
