@@ -3,7 +3,7 @@
 
 # Getting Started
 
-**1. Set up environment variables**
+#### **1. Set up environment variables**
 
    Create `.env` file from the template
    ```
@@ -11,7 +11,7 @@
    ```
    Within `.env`, replace `GROQ_API_KEY=gsk_your_actual_api_key_here` with your actual Groq API key
    
-**2. Install docker**
+#### **2. Install docker**
   ```
   curl -fsSL https://get.docker.com | sh
   ```
@@ -21,14 +21,16 @@
   ```
   Log out and back in to your shell for the changes to take effect
 
-**3. Build the docker image**
+  NOTE: Alternatively you can install Docker Desktop
+
+#### **3. Build the docker image**
   ```
   docker build -t <image-name> .
   ```
 
-**4. Run the image using the `.env` file**
+#### **4. Run the image using the `.env` file**
   ```
   docker run -d -p 8501:8501 --env-file .env <image-name>
   ```
 
-4. Now you can access the app through ``http://localhost:8501`` on your local machine
+#### **5. Access the app through ``http://localhost:8501`` on your local machine**
