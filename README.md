@@ -3,6 +3,10 @@
 
 Infipedia is an infinite, Wikipedia-inspired browsing experience powered by AI. Inspired by the feeling of raw discovery brought by browsing the early internet, Infipedia eliminates ads, clickbait, SEO spam, and distractions to focus on genuine exploration and knowledge discovery. Built using **Streamlit** for an intuitive user interface and **Groq** for lightning-fast content delivery, this project aims to bring back the magic of OG online exploration.
 
+<video src="assets/InfipediaDemo.mp4" controls="controls" style="max-width: 100%;">
+    Your browser does not support the video tag.
+</video>
+
 ---
 ## About
 
