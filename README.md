@@ -3,7 +3,7 @@
 
 Infipedia is an infinite, Wikipedia-inspired browsing experience powered by AI. Inspired by the feeling of raw discovery brought by browsing the early internet, Infipedia eliminates ads, clickbait, SEO spam, and distractions to focus on genuine exploration and knowledge discovery. Built using **Streamlit** for an intuitive user interface and **Groq** for lightning-fast content delivery, this project aims to bring back the magic of OG online exploration.
 
-<video src="assets/InfipediaDemo.mp4" controls="controls" style="max-width: 100%;">
+<video src="https://github.com/user-attachments/assets/ff358e1b-0845-4029-9761-d26a17564ddd" controls="controls" style="max-width: 100%;">
     Your browser does not support the video tag.
 </video>
 
@@ -13,6 +13,8 @@ Infipedia is an infinite, Wikipedia-inspired browsing experience powered by AI. 
 Infipedia reimagines the joy of discovery that once defined browsing the internet—before ads, clickbait and SEO spam took over. Inspired by **Wikipedia**’s simplicity and intuitive exploration model—minimal distractions, informative content, and links to countless rabbithole topics—Infipedia provides the same ease of browsing but uses AI to fill in gaps where traditional encyclopedias or single sites fall short. By tapping into the entire internet for context, it dynamically generates new topic pages, ensuring there are no dead ends, no matter how obscure or deep your search.
 
 Under the hood, a series of AI agents powered by Groq enables near-instant content generation and delivery, providing a lightning-fast experience so users can quickly switch between topics. Meanwhile, Streamlit supports the simple and intuitive interface, making it easy to search, browse, and dive into the many rabbitholes of knowledge that Infipedia has to offer. The result is an infinitely expanding, distraction-free world of information—taking the best from the Wikipedia browsing experience, but supercharged by AI.
+
+Infipedia is available at https://infipedia.jacksongrove.me
 
 ---
 
