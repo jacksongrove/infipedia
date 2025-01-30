@@ -34,7 +34,7 @@ def generate_title(user_query: str = "") -> (str | None):
                 "content": title_prompt,
             }
         ],
-        model="llama-3.1-70b-versatile"
+        model="llama-3.3-70b-specdec"
     )
     
     return chat_completion.choices[0].message.content
@@ -90,7 +90,7 @@ def generate_content(page_title: str = "", search_query: str = ""):
                 "content": page_prompt1,
             }
         ],
-        model="llama-3.1-70b-versatile",
+        model="llama-3.3-70b-specdec",
         stream = True
     )
     partial_content = ""
@@ -123,7 +123,7 @@ def generate_content(page_title: str = "", search_query: str = ""):
                 "content": page_prompt2,
             }
         ],
-        model="llama-3.1-70b-versatile",
+        model="llama-3.3-70b-specdec",
         stream = True
     )
 
